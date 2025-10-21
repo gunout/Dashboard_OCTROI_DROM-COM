@@ -1301,25 +1301,28 @@ class OctroiMerDashboard:
                 donnees_filtrees['pib_par_habitant'] = donnees_filtrees['pib'] * 1e6 / donnees_filtrees['population']
                 donnees_filtrees['contribution_octroi_pib'] = (donnees_filtrees['revenu_octroi_total'] * 12) / (donnees_filtrees['pib'] * 1e6) * 100
                 
-                st.dataframe(
-                    donnees_filtrees[
-                        ['nom_complet', 'type', 'population', 'superficie', 'pib', 
-                         'revenu_octroi_total', 'revenu_par_habitant', 'densite', 
-                         'pib_par_habitant', 'contribution_octroi_pib']
-                    ].rename(columns={
-                        'nom_complet': 'Territoire',
-                        'type': 'Type',
-                        'population': 'Population',
-                        'superficie': 'Superficie (km²)',
-                        'pib': 'PIB (M€)',
-                        'revenu_octroi_total': 'Revenu Mensuel (€)',
-                        'revenu_par_habitant': 'Revenu/Habitant (€)',
-                        'densite': 'Densité (hab/km²)',
-                        'pib_par_habitant': 'PIB/Habitant (€)',
-                        'contribution_octroi_pib': 'Contribution Octroi/PIB (%)'
-                    }).sort_values('revenu_octroi_total', ascending=False),
-                    use_container_width=True
-                )
+                # Create the display dataframe with renamed columns
+                display_df = donnees_filtrees[
+                    ['nom_complet', 'type', 'population', 'superficie', 'pib', 
+                     'revenu_octroi_total', 'revenu_par_habitant', 'densite', 
+                     'pib_par_habitant', 'contribution_octroi_pib']
+                ].rename(columns={
+                    'nom_complet': 'Territoire',
+                    'type': 'Type',
+                    'population': 'Population',
+                    'superficie': 'Superficie (km²)',
+                    'pib': 'PIB (M€)',
+                    'revenu_octroi_total': 'Revenu Mensuel (€)',
+                    'revenu_par_habitant': 'Revenu/Habitant (€)',
+                    'densite': 'Densité (hab/km²)',
+                    'pib_par_habitant': 'PIB/Habitant (€)',
+                    'contribution_octroi_pib': 'Contribution Octroi/PIB (%)'
+                })
+                
+                # Sort by the renamed column
+                display_df = display_df.sort_values('Revenu Mensuel (€)', ascending=False)
+                
+                st.dataframe(display_df, use_container_width=True)
                 
                 col1, col2 = st.columns(2)
                 
