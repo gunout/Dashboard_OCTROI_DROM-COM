@@ -450,7 +450,8 @@ def get_secteurs_definitions(territory_code):
 @st.cache_data(ttl=1800)
 def generate_historical_data(territory_code, secteurs):
     """Génère les données historiques optimisées"""
-    dates = pd.date_range('2022-01-01', datetime.now(), freq='M')
+    # CORRECTION: Utilisation de 'ME' au lieu de 'M'
+    dates = pd.date_range('2022-01-01', datetime.now(), freq='ME')
     data = []
     
     for date in dates:
@@ -1187,7 +1188,7 @@ class OctroiMerDashboard:
             
             derniere_date = data['historical_data']['date'].max()
             dates_futures = pd.date_range(derniere_date + timedelta(days=30), 
-                                        periods=12, freq='M')
+                                        periods=12, freq='ME')
             
             projections = []
             revenu_base = data['current_data']['revenu_mensuel'].sum()
@@ -1480,7 +1481,7 @@ class OctroiMerDashboard:
                     **💡 Opportunités:**
                     - Digitalisation des procédures
                     - Élargissement assiette fiscale
-                    - Cooperation régionale
+                    - Coopération régionale
                     
                     **🔮 Perspectives:**
                     - Croissance modérée des revenus
@@ -1585,7 +1586,7 @@ class OctroiMerDashboard:
                     **💡 Opportunités:**
                     - Digitalisation des procédures
                     - Élargissement assiette fiscale
-                    - Cooperation régionale
+                    - Coopération régionale
                     """)
                 
                 st.markdown("""
